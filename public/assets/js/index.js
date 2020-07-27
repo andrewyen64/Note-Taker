@@ -11,7 +11,7 @@ let activeNote = {};
 const getNotes = () => {
   return $.ajax({
     url: "/api/notes",
-    method: "GET",
+    method: "GET"
   });
 };
 
@@ -20,7 +20,7 @@ const saveNote = (note) => {
   return $.ajax({
     url: "/api/notes",
     data: note,
-    method: "POST",
+    method: "POST"
   });
 };
 
@@ -28,7 +28,7 @@ const saveNote = (note) => {
 const deleteNote = (id) => {
   return $.ajax({
     url: "api/notes/" + id,
-    method: "DELETE",
+    method: "DELETE"
   });
 };
 
@@ -53,7 +53,7 @@ const renderActiveNote = () => {
 const handleNoteSave = function () {
   const newNote = {
     title: $noteTitle.val(),
-    text: $noteText.val(),
+    text: $noteText.val()
   };
 
   saveNote(newNote);
@@ -63,7 +63,7 @@ const handleNoteSave = function () {
 
 // Delete the clicked note
 const handleNoteDelete = function (event) {
-  // prevents the click listener for the list from being called when the button inside of it is clicked
+  // Prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
 
   const note = $(this).parent(".list-group-item").data();
@@ -89,7 +89,7 @@ const handleNewNoteView = function () {
   renderActiveNote();
 };
 
-// If a note's title or text are empty, hide the save button
+// If a note's title or text are empty, hide the save button.
 // Or else show it
 const handleRenderSaveBtn = function () {
   if (!$noteTitle.val().trim() || !$noteText.val().trim()) {
@@ -110,14 +110,10 @@ const renderNoteList = (notes) => {
 
     var $li = $("<li class='list-group-item'>").data(note);
     $li.data("id", i);
-
     var $span = $("<span>").text(note.title);
     var $delBtn = $(
-      "<i class='fas fa-trash-alt float-right text-danger delete-note' data-id=" +
-        i +
-        ">"
+      "<i class='fas fa-trash-alt float-right text-danger delete-note' data-id=" + i + ">"
     );
-
     $li.append($span, $delBtn);
     noteListItems.push($li);
   }
