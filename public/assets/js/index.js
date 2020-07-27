@@ -56,10 +56,9 @@ const handleNoteSave = function () {
     text: $noteText.val(),
   };
 
-  saveNote(newNote).then(() => {
+  saveNote(newNote);
     getAndRenderNotes();
     renderActiveNote();
-  });
 };
 
 // Delete the clicked note
@@ -73,10 +72,9 @@ const handleNoteDelete = function (event) {
     activeNote = {};
   }
 
-  deleteNote(note.id).then(() => {
+  deleteNote(note.id);
     getAndRenderNotes();
-    renderActiveNote();
-  });
+    renderActiveNote();  
 };
 
 // Sets the activeNote and displays it
@@ -107,30 +105,22 @@ const renderNoteList = (notes) => {
 
   const noteListItems = [];
 
-  // Returns jquery object for li with given text and delete button
-  // unless withDeleteButton argument is provided as false
-  const create$li = (text, withDeleteButton = true) => {
-    const $li = $("<li class='list-group-item'>");
-    const $span = $("<span>").text(text);
-    $li.append($span);
+  for (var i = 0; i < notes.length; i++) {
+    var note = notes[i];
 
-    if (withDeleteButton) {
-      const $delBtn = $(
-        "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
-      );
-      $li.append($delBtn);
-    }
-    return $li;
-  };
+    var $li = $("<li class='list-group-item'>").data(note);
+    $li.data("id", i);
 
-  if (notes.length === 0) {
-    noteListItems.push(create$li("No saved Notes", false));
-  }
+    var $span = $("<span>").text(note.title);
+    var $delBtn = $(
+      "<i class='fas fa-trash-alt float-right text-danger delete-note' data-id=" +
+        i +
+        ">"
+    );
 
-  notes.forEach((note) => {
-    const $li = create$li(note.title).data(note);
+    $li.append($span, $delBtn);
     noteListItems.push($li);
-  });
+  }
 
   $noteList.append(noteListItems);
 };
