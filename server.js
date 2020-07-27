@@ -12,7 +12,8 @@ var PORT = process.env.PORT || 3001;
 // Sets up the Express app to Handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+// Express looks up the files relative to the static directory, so the name of the static directory is not part of the URL.
+app.use(express.static("public"));
 
 // ROUTER: Links server.js to the html/api route files
 require("./routes/apiRoutes")(app);
